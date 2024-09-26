@@ -6,16 +6,52 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
+import jakarta.validation.constraints.NotBlank;
+
 @Component
 @Document(collection = "pessoas")
 public class Pessoas {
 
 	@Id
-	protected String id;
+	private String id;
+	
+    @NotBlank(message = "Nome não pode estar vazio")
 	private String nome;
+	
+    @NotBlank(message = "CPF não pode estar vazio")
 	private String cpf;
+    
+    @NotBlank(message = "Telefone não pode estar vazio")
 	private String telefone;
+	
+    //@NotBlank(message = "Data de Nascimento não pode estar vazio")
 	private Date dataNascimento;
+	
+	public Pessoas() {}
+	
+	public Pessoas(@NotBlank(message = "CPF não pode estar vazio") String cpf) {
+		this.cpf = cpf;
+	}
+	
+	public Pessoas(String id, @NotBlank(message = "Nome não pode estar vazio") String nome,
+			@NotBlank(message = "CPF não pode estar vazio") String cpf,
+			@NotBlank(message = "Telefone não pode estar vazio") String telefone, Date dataNascimento) {
+		this.id = id;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.telefone = telefone;
+		this.dataNascimento = dataNascimento;
+	}
+	
+	public Pessoas(@NotBlank(message = "Nome não pode estar vazio") String nome,
+			@NotBlank(message = "CPF não pode estar vazio") String cpf,
+			@NotBlank(message = "Telefone não pode estar vazio") String telefone, Date dataNascimento) {
+		super();
+		this.nome = nome;
+		this.cpf = cpf;
+		this.telefone = telefone;
+		this.dataNascimento = dataNascimento;
+	}
 
 	public String getNome() {
 		return nome;
